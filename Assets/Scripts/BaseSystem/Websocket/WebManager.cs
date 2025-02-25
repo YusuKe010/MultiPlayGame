@@ -39,7 +39,6 @@ public class WebManager : SingletonMonoBehavior<WebManager>
         data.Command = "InstancePlayer";
         data.JsonBody = "";
         string json = JsonUtility.ToJson(data);
-        InstancePlayer(UserData.ID);
         await SendCommand(json);
     }
 
@@ -51,7 +50,7 @@ public class WebManager : SingletonMonoBehavior<WebManager>
     {
         if (UserData.ID == default)
         {
-            Debug.LogWarning("IDがありません。先にログインして下さい");
+            Debug.LogWarning("名前がありません。先にログインして下さい");
             return null;
         }
 
@@ -186,6 +185,13 @@ public class WebManager : SingletonMonoBehavior<WebManager>
         {
             try
             {
+                CommunicateData data = new();
+                data.ID = UserData.ID;
+                data.Command = "RemovePlayer";
+                data.JsonBody = "";
+                string json = JsonUtility.ToJson(data);
+                await SendCommand(json);
+                Debug.Log("RemovePlayer");
                 await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "Connection Closed", CancellationToken.None);
                 Debug.Log("WebSocket を正常に閉じました。");
             }
@@ -221,8 +227,8 @@ public class WebManager : SingletonMonoBehavior<WebManager>
 
     public void RemovePlayer(string ID)
     {
-        players.Remove(ID);
         Destroy(players[ID]);
+        players.Remove(ID);
     }
 
     public void ApplyTransform(string ID, Vector3 position)

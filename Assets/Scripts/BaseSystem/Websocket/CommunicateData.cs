@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 public class CommunicateData
 {
@@ -17,4 +18,5 @@ public struct UserData
 public class RoomPlayersData
 {
     public string[] Players;
+    
 }
