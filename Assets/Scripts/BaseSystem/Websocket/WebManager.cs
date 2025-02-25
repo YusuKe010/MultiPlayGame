@@ -235,7 +235,6 @@ public class WebManager : SingletonMonoBehavior<WebManager>
 
     public bool IsPlayer(string ID)
     {
-        Debug.Log(UserData.ID == ID);
         return UserData.ID == ID;
     }
 }

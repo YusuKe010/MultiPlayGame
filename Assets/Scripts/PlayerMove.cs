@@ -14,6 +14,7 @@ namespace DefaultNamespace
         Rigidbody2D _rb;
         public CommunicateData data = new();
         private bool start;
+        private Vector3 _savePos;
 
 
         private void Awake()
@@ -29,6 +30,11 @@ namespace DefaultNamespace
             if (WebManager.Instance.IsPlayer(data.ID))
             {
                 OnMove();
+            }
+
+            if (transform.position != _savePos)
+            {
+                _savePos = transform.position;
                 SendTransForm();
             }
         }
@@ -36,7 +42,7 @@ namespace DefaultNamespace
 
         public void OnMove()
         {
-            Vector2 move = new Vector2( Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            Vector2 move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             _rb.linearVelocity = move * _speed;
         }
 
