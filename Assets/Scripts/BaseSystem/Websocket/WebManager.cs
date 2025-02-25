@@ -12,7 +12,7 @@ public class WebManager : SingletonMonoBehavior<WebManager>
 {
     [SerializeField] GameObject playerPrefab;
     public ClientWebSocket ws = default;
-    private string URL = "ws://localhost:8080/";
+    private string URL = "ws://192.168.0.32:8080/";
     public UserData UserData = new();
     private SemaphoreSlim sendLock = new SemaphoreSlim(1, 1); // 送信をスレッドセーフにする
     private CancellationTokenSource _ctsReceiving = new();
