@@ -134,6 +134,9 @@ public class WebManager : SingletonMonoBehavior<WebManager>
 
                 switch (communicateData.Command)
                 {
+                    case "JoinGame":
+                        JoinGame(communicateData.JsonBody);
+                        break;
                     case "InstancePlayer":
                         InstancePlayer(communicateData.ID);
                         break;
@@ -186,6 +189,16 @@ public class WebManager : SingletonMonoBehavior<WebManager>
             {
                 ws = null;
             }
+        }
+    }
+
+    public void JoinGame(string json)
+    {
+        Debug.Log(json);
+        string[] data = JsonUtility.FromJson<string[]>(json);
+        foreach (var id in data)
+        {
+            InstancePlayer(id);
         }
     }
 

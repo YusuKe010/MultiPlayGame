@@ -18,35 +18,26 @@ namespace DefaultNamespace
 
         private void Awake()
         {
-            _moveAction = new();
-            _moveAction.Enable();
-            _moveAction.Player.Move.started += OnMove;
-            _moveAction.Player.Move.performed += OnMove;
-            _moveAction.Player.Move.canceled += OnMove;
             _rb = GetComponent<Rigidbody2D>();
         }
 
         private void Update()
         {
-            if (WebManager.Instance.IsPlayer(data.ID) && !start)
-            {
-                start = true;
-                _moveAction = new();
-                _moveAction.Enable();
-                _moveAction.Player.Move.started += OnMove;
-                _moveAction.Player.Move.performed += OnMove;
-                _moveAction.Player.Move.canceled += OnMove;
+            if (_rb == null)
                 _rb = GetComponent<Rigidbody2D>();
-            }
+
             if (WebManager.Instance.IsPlayer(data.ID))
+            {
+                OnMove();
                 SendTransForm();
-            
+            }
         }
 
 
-        public void OnMove(InputAction.CallbackContext context)
+        public void OnMove()
         {
-            _rb.linearVelocity = context.ReadValue<Vector2>() * _speed;
+            Vector2 move = new Vector2( Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            _rb.linearVelocity = move * _speed;
         }
 
         private async void SendTransForm()
