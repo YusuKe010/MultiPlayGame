@@ -203,8 +203,9 @@ public class WebManager : SingletonMonoBehavior<WebManager>
     public void JoinGame(string json)
     {
         Debug.Log(json);
-        string[] data = JsonUtility.FromJson<string[]>(json);
-        foreach (var id in data)
+        if(json == "[]") return;
+        RoomPlayersData data = JsonUtility.FromJson<RoomPlayersData>(json);
+        foreach (var id in data.players)
         {
             InstancePlayer(id);
         }
@@ -225,7 +226,7 @@ public class WebManager : SingletonMonoBehavior<WebManager>
 
     public void ApplyTransform(string ID, Vector3 position)
     {
-        if (ID != UserData.ID)
+        if (ID != UserData.ID && players.ContainsKey(ID))
         {
             players[ID].transform.position = position;
         }
