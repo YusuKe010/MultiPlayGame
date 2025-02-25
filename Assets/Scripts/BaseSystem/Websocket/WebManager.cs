@@ -26,6 +26,14 @@ public class WebManager : SingletonMonoBehavior<WebManager>
         UserData.ID = guid.ToString();
         UserData.Name = "Slime";
         await ConnectServerByPlayerID();
+        CommunicateData aaa = new();
+        aaa.ID = UserData.ID;
+        aaa.Command = "JoinGame";
+        aaa.JsonBody = "";
+        string jsons = JsonUtility.ToJson(aaa);
+        await SendCommand(jsons);
+        
+        
         CommunicateData data = new();
         data.ID = UserData.ID;
         data.Command = "InstancePlayer";
