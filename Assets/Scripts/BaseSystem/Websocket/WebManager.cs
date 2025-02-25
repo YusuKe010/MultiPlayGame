@@ -204,8 +204,9 @@ public class WebManager : SingletonMonoBehavior<WebManager>
     {
         Debug.Log(json);
         if(json == "[]") return;
-        RoomPlayersData data = JsonUtility.FromJson<RoomPlayersData>(json);
-        foreach (var id in data.players)
+        string processing = "{\"Players\":" + json + "}";
+        RoomPlayersData data = JsonUtility.FromJson<RoomPlayersData>(processing);
+        foreach (var id in data.Players)
         {
             InstancePlayer(id);
         }

@@ -16,5 +16,5 @@ public struct UserData
 [Serializable]
 public class RoomPlayersData
 {
-    public string[] players;
+    public string[] Players;
 }
